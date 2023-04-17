@@ -1,9 +1,6 @@
 package sorting;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 abstract class Input <T> {
     public ArrayList<T> elements;
@@ -50,6 +47,10 @@ abstract class Input <T> {
         return (long) 100.0 * this.getGreatestCount() / this.getLength();
     }
 
+    public void printTotal() {
+        System.out.println("Total " + this.description + "s: " + this.getLength() + ".");
+    }
+
     public void printStats(boolean useNewLine) {
         String resultSep = " ";
 
@@ -57,7 +58,6 @@ abstract class Input <T> {
             resultSep = "\n";
         }
 
-        System.out.println("Total " + this.description + "s: " + this.getLength() + ".");
         System.out.println("The " + this.adjective + " " + this.description + ":" +
                 resultSep +
                 this.getGreatest() +
@@ -67,6 +67,8 @@ abstract class Input <T> {
     }
 
     public abstract void printStats();
+
+    public abstract void printSorted();
 
 }
 
@@ -95,11 +97,22 @@ class LongInput extends Input <Long> {
         return greatestElement;
     }
 
-
     public void printStats() {
         super.printStats(false);
     }
 
+    public void printSorted() {
+        Comparator<Long> naturalOrder = Comparator.naturalOrder();
+        elements.sort(naturalOrder);
+        System.out.print("Sorted data: ");
+        for (int i = 0; i < elements.size(); i++) {
+            System.out.print(elements.get(i));
+            if (i != elements.size() - 1) {
+                System.out.print(" ");
+            }
+        }
+        System.out.println();
+    }
 }
 
 class LineInput extends Input <String> {
@@ -122,6 +135,10 @@ class LineInput extends Input <String> {
     public void printStats() {
         super.printStats(true);
     }
+
+    public void printSorted() {
+
+    }
 }
 
 class WordInput extends Input <String> {
@@ -141,8 +158,11 @@ class WordInput extends Input <String> {
         return getGreatestString(this.elements);
     }
 
-
     public void printStats() {
         super.printStats(false);
+    }
+
+    public void printSorted() {
+
     }
 }

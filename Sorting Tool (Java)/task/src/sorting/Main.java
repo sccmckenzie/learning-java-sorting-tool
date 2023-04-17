@@ -19,7 +19,8 @@ public class Main {
         String argName = args[0];
         if (config.sortIntegers) {
             context.setInput(new LongInput(scanner));
-            context.printStats();
+            context.printTotal();
+            context.printSorted();
         } else {
             switch(config.dataType) {
                 case "long":
@@ -34,6 +35,7 @@ public class Main {
                 default:
                     throw new Exception("Invalid dataType parameter");
             }
+            context.printTotal();
             context.printStats();
         }
 

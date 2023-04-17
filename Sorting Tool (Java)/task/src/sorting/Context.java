@@ -7,7 +7,15 @@ public class Context {
         this.input = input;
     }
 
+    public void printTotal() {
+        this.input.printTotal();
+    }
+
     public void printStats() {
         this.input.printStats();
+    }
+
+    public void printSorted() {
+        this.input.printSorted();
     }
 }

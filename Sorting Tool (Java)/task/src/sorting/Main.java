@@ -1,6 +1,7 @@
 package sorting;
 
 import java.util.*;
+import com.beust.jcommander.JCommander;
 
 
 public class Main {
@@ -8,27 +9,32 @@ public class Main {
     public static void main(final String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        Input input = null;
+        Context context = new Context();
 
-        // duct-tape argument parsing bc internet connection isn't good enough to download jcommander
-        if (args.length > 0) {
-            switch(args[1]) {
+
+        AppConfig config = new AppConfig();
+        JCommander jcmd = JCommander.newBuilder().addObject(config).build();
+        jcmd.parse(args);
+
+        String argName = args[0];
+        if (config.sortIntegers) {
+            context.setInput(new LongInput(scanner));
+            context.printStats();
+        } else {
+            switch(config.dataType) {
                 case "long":
-                    input = new LongInput(scanner);
+                    context.setInput(new LongInput(scanner));
                     break;
                 case "line":
-                    input = new LineInput(scanner);
+                    context.setInput(new LineInput(scanner));
                     break;
                 case "word":
-                    input = new WordInput(scanner);
+                    context.setInput(new WordInput(scanner));
                     break;
                 default:
                     throw new Exception("Invalid dataType parameter");
             }
-            input.printStats();
-        } else {
-            input = new LongInput(scanner);
-            input.printStats();
+            context.printStats();
         }
 
 

@@ -4,36 +4,13 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
 import com.beust.jcommander.JCommander;
-import com.beust.jcommander.ParameterException;
-
 
 public class Main {
 
     public static void main(final String[] args) throws Exception {
 
-
-        for (String arg : args) {
-            if (arg.contains("-") && !(arg.contains("dataType") ||
-                    arg.contains("sortingType") ||
-                    arg.contains("inputFile") ||
-                    arg.contains("outputFile"))) {
-                System.out.println("\"" + arg + "\" is not a valid parameter. It will be skipped.");
-            }
-        }
-
         AppConfig config = new AppConfig();
         JCommander jcmd = JCommander.newBuilder().addObject(config).build();
-
-        try {
-            jcmd.parse(args);
-        } catch (ParameterException e) {
-            if (e.getMessage().contains("dataType") ||
-                    e.getMessage().contains("sortingType") ||
-                    e.getMessage().contains("inputFile") ||
-                    e.getMessage().contains("outputFile")) {
-                return;
-            }
-        }
 
         // has user specified inputFile?
         // if not, use stdin
@@ -55,9 +32,7 @@ public class Main {
             printStream = new PrintStream(outputFile);
         }
 
-
         Context context = new Context();
-
 
         switch(config.dataType) {
             case "long":

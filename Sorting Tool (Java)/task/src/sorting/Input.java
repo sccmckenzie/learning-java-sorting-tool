@@ -1,5 +1,6 @@
 package sorting;
 
+import java.io.PrintStream;
 import java.util.*;
 
 abstract class Input <T extends Comparable<? super T>> {
@@ -8,6 +9,8 @@ abstract class Input <T extends Comparable<? super T>> {
     public String description;
 
     public String adjective = "longest";
+    
+    public PrintStream printStream;
 
     public int getLength() {
         return elements.size();
@@ -34,7 +37,7 @@ abstract class Input <T extends Comparable<? super T>> {
     }
 
     public void printTotal() {
-        System.out.println("Total " + this.description + "s: " + this.getLength() + ".");
+        printStream.println("Total " + this.description + "s: " + this.getLength() + ".");
     }
 
     public abstract void printSorted();
@@ -43,7 +46,7 @@ abstract class Input <T extends Comparable<? super T>> {
         TreeMap<T, Integer> sortedByCount = this.getSortedByCount();
 
         for (Map.Entry<T, Integer> entry : sortedByCount.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue() + " time(s), " +
+            printStream.println(entry.getKey() + ": " + entry.getValue() + " time(s), " +
                     this.getPercentage(entry.getKey()) + "%");
         }
     }
@@ -52,8 +55,9 @@ abstract class Input <T extends Comparable<? super T>> {
 
 class LongInput extends Input <Long> {
 
-    public LongInput(Scanner scanner) {
+    public LongInput(Scanner scanner, PrintStream printStream) {
 
+        super.printStream = printStream;
         super.description = "number";
         super.adjective = "greatest";
 
@@ -67,22 +71,23 @@ class LongInput extends Input <Long> {
     }
 
     public void printSorted() {
-        System.out.print("Sorted data: ");
+        printStream.print("Sorted data: ");
         for (int i = 0; i < elements.size(); i++) {
-            System.out.print(elements.get(i));
+            printStream.print(elements.get(i));
             if (i != elements.size() - 1) {
-                System.out.print(" ");
+                printStream.print(" ");
             }
         }
-        System.out.println();
+        printStream.println();
     }
 }
 
 class LineInput extends Input <String> {
 
 
-    public LineInput(Scanner scanner) {
+    public LineInput(Scanner scanner, PrintStream printStream) {
 
+        super.printStream = printStream;
         super.description = "line";
 
         this.elements = new ArrayList<String>();
@@ -95,22 +100,23 @@ class LineInput extends Input <String> {
     }
 
     public void printSorted() {
-        System.out.println("Sorted data: ");
+        printStream.println("Sorted data: ");
         for (int i = 0; i < elements.size(); i++) {
-            System.out.print(elements.get(i));
+            printStream.print(elements.get(i));
             if (i != elements.size() - 1) {
-                System.out.println();
+                printStream.println();
             }
         }
-        System.out.println();
+        printStream.println();
     }
 }
 
 class WordInput extends Input <String> {
 
 
-    public WordInput(Scanner scanner) {
+    public WordInput(Scanner scanner, PrintStream printStream) {
 
+        super.printStream = printStream;
         super.description = "word";
 
         this.elements = new ArrayList<String>();
@@ -123,14 +129,14 @@ class WordInput extends Input <String> {
     }
 
     public void printSorted() {
-        System.out.print("Sorted data: ");
+        printStream.print("Sorted data: ");
         for (int i = 0; i < elements.size(); i++) {
-            System.out.print(elements.get(i));
+            printStream.print(elements.get(i));
             if (i != elements.size() - 1) {
-                System.out.print(" ");
+                printStream.print(" ");
             }
         }
-        System.out.println();
+        printStream.println();
     }
 
 }

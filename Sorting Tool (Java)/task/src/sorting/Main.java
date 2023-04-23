@@ -16,29 +16,28 @@ public class Main {
         JCommander jcmd = JCommander.newBuilder().addObject(config).build();
         jcmd.parse(args);
 
-        String argName = args[0];
-        if (config.sortIntegers) {
-            context.setInput(new LongInput(scanner));
-            context.printTotal();
-            context.printSorted();
-        } else {
-            switch(config.dataType) {
-                case "long":
-                    context.setInput(new LongInput(scanner));
-                    break;
-                case "line":
-                    context.setInput(new LineInput(scanner));
-                    break;
-                case "word":
-                    context.setInput(new WordInput(scanner));
-                    break;
-                default:
-                    throw new Exception("Invalid dataType parameter");
-            }
-            context.printTotal();
-            context.printStats();
+        switch(config.dataType) {
+            case "long":
+                context.setInput(new LongInput(scanner));
+                break;
+            case "line":
+                context.setInput(new LineInput(scanner));
+                break;
+            case "word":
+                context.setInput(new WordInput(scanner));
+                break;
+            default:
+                throw new Exception("Invalid dataType parameter");
         }
 
+        context.printTotal();
 
+        if (config.sortingType.equals("natural")) {
+            context.printSorted();
+        } else if (config.sortingType.equals("byCount")) {
+            context.printSortedByCount();
+        } else {
+            throw new Exception("Invalid sortingType parameter");
+        }
     }
 }

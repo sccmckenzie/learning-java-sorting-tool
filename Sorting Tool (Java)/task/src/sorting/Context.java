@@ -11,11 +11,11 @@ public class Context {
         this.input.printTotal();
     }
 
-    public void printStats() {
-        this.input.printStats();
-    }
-
     public void printSorted() {
         this.input.printSorted();
+    }
+
+    public void printSortedByCount() {
+        this.input.printSortedByCount();
     }
 }
